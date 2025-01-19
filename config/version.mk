@@ -1,32 +1,29 @@
-CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
+RVOS_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 
-CUSTOM_PLATFORM_VERSION := 15.0
+RVOS_PLATFORM_VERSION := 15.0
+RVOS_DISPLAY_VERSION := 1.0
+RVOS_VERSION := RvOS-v$(RVOS_DISPLAY_VERSION)-$(RVOS_BUILD)-$(RVOS_BUILD_TYPE)-$(RVOS_PLATFORM_VERSION)-$(RVOS_BUILD_DATE)
 
-CUSTOM_VERSION := PixelOS_$(CUSTOM_BUILD)-$(CUSTOM_PLATFORM_VERSION)-$(CUSTOM_BUILD_DATE)
-CUSTOM_VERSION_PROP := fifteen
+RVOS_MAINTAINER ?= Unknown
+RVOS_BUILD_TYPE ?= UNOFFICIAL
 
-# PixelOS Platform Version
+# RvOS Platform Version
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.custom.build.date=$(BUILD_DATE) \
-    ro.custom.device=$(CUSTOM_BUILD) \
-    ro.custom.fingerprint=$(ROM_FINGERPRINT) \
-    ro.custom.version=$(CUSTOM_VERSION) \
-    ro.modversion=$(CUSTOM_VERSION)
-
-# Updater
-ifeq ($(IS_OFFICIAL),true)
-    PRODUCT_PRODUCT_PROPERTIES += \
-        net.pixelos.build_type=ci \
-        net.pixelos.version=$(CUSTOM_VERSION_PROP)
-endif
+    ro.rvos.build.date=$(BUILD_DATE) \
+    ro.rvos.device=$(RVOS_BUILD) \
+    ro.rvos.fingerprint=$(ROM_FINGERPRINT) \
+    ro.rvos.version=$(RVOS_DISPLAY_VERSION) \
+    ro.modversion=$(RVOS_VERSION) \
+    ro.rvos.maintainer=$(RVOS_MAINTAINER) \
+    ro.rvos.build.type=$(RVOS_BUILD_TYPE)
 
 # Signing
 ifneq (eng,$(TARGET_BUILD_VARIANT))
-ifneq (,$(wildcard vendor/aosp/signing/keys/releasekey.pk8))
-PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/aosp/signing/keys/releasekey
+ifneq (,$(wildcard vendor/rvos/signing/keys/releasekey.pk8))
+PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/rvos/signing/keys/releasekey
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.oem_unlock_supported=1
 endif
-ifneq (,$(wildcard vendor/aosp/signing/keys/otakey.x509.pem))
-PRODUCT_OTA_PUBLIC_KEYS := vendor/aosp/signing/keys/otakey.x509.pem
+ifneq (,$(wildcard vendor/rvos/signing/keys/otakey.x509.pem))
+PRODUCT_OTA_PUBLIC_KEYS := vendor/rvos/signing/keys/otakey.x509.pem
 endif
 endif
