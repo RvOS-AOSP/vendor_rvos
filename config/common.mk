@@ -260,6 +260,9 @@ CUSTOM_LOCALES += \
 
 include vendor/rvos/config/version.mk
 
+# RvOS PIF
+$(call inherit-product-if-exists, vendor/rvos-pif/product.mk)
+
 # OTA
 $(call inherit-product, vendor/rvos/config/ota.mk)
 
