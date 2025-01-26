@@ -1,11 +1,24 @@
 RVOS_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 
+RVOS_MAINTAINER ?= Unknown
+RVOS_BUILD_TYPE := Unofficial
 RVOS_PLATFORM_VERSION := 15.0
 RVOS_DISPLAY_VERSION := 1.0
-RVOS_VERSION := RvOS-v$(RVOS_DISPLAY_VERSION)-$(RVOS_BUILD)-$(RVOS_BUILD_TYPE)-$(RVOS_PLATFORM_VERSION)-$(RVOS_BUILD_DATE)
+OFFICIAL_MAINTAINER = $(shell cat vendor/rvos/maintainer/official_maintainer.mk | awk '{ print $$1 }')
 
-RVOS_MAINTAINER ?= Unknown
-RVOS_BUILD_TYPE ?= UNOFFICIAL
+# Check Official Maintainer
+ifdef RVOS_MAINTAINER
+        ifeq ($(filter $(RVOS_MAINTAINER), $(OFFICIAL_MAINTAINER)), $(RVOS_MAINTAINER))
+                $(warning "$(RVOS_MAINTAINER) is verified as official RvOS maintainer, build as official build.")
+                RVOS_BUILD_TYPE := Official
+        else
+                $(warning "Unofficial maintainer detected, building as unofficial build.")
+        endif
+else
+        $(warning "No maintainer name detected, building as unofficial build.")
+endif
+
+RVOS_VERSION := RvOS-v$(RVOS_DISPLAY_VERSION)-$(RVOS_BUILD)-$(RVOS_BUILD_TYPE)-$(RVOS_PLATFORM_VERSION)-$(RVOS_BUILD_DATE)
 
 # RvOS Platform Version
 PRODUCT_PRODUCT_PROPERTIES += \
