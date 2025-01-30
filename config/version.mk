@@ -22,9 +22,7 @@ RVOS_VERSION := RvOS-v$(RVOS_DISPLAY_VERSION)-$(RVOS_BUILD)-$(RVOS_BUILD_TYPE)-$
 
 # RvOS Platform Version
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.rvos.build.date=$(BUILD_DATE) \
     ro.rvos.device=$(RVOS_BUILD) \
-    ro.rvos.fingerprint=$(ROM_FINGERPRINT) \
     ro.rvos.version=$(RVOS_DISPLAY_VERSION) \
     ro.modversion=$(RVOS_VERSION) \
     ro.rvos.maintainer=$(RVOS_MAINTAINER) \
