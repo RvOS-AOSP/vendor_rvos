@@ -3,7 +3,7 @@ RVOS_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 RVOS_MAINTAINER ?= Unknown
 RVOS_BUILD_TYPE := Unofficial
 RVOS_PLATFORM_VERSION := 15.0
-RVOS_DISPLAY_VERSION := 1.0
+RVOS_DISPLAY_VERSION := 1.1
 OFFICIAL_MAINTAINER = $(shell cat vendor/rvos/maintainer/official_maintainer.mk | awk '{ print $$1 }')
 
 # Check Official Maintainer
